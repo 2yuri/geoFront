@@ -111,7 +111,7 @@ export default {
   ,
   methods: {
     async sendValueFirstTime() {
-      const { data } = await axios.post('http://192.168.0.22:3008/address', {
+      const { data } = await axios.post('http://localhost:3008/address', {
         street: 'Rua matelandia',
         number: '674',
         city: 'Cascavel',
@@ -124,7 +124,7 @@ export default {
       this.zoom = 16
     },
     async sendValue() {
-      const { data } = await axios.post('http://192.168.0.22:3008/address', {
+      const { data } = await axios.post('http://localhost:3008/address', {
         street: this.street,
         number: this.number,
         city: this.city,
@@ -132,6 +132,10 @@ export default {
         country: ''   
       })
 
+
+      if (data.result !== 200 || !data) {
+        alert('Ocorreu um erro na hora de localizar seu endereço!')
+      } else {
       this.lat = data.infos.geoInformation.lat;
       this.long = data.infos.geoInformation.lng
       this.zoom = 16
@@ -141,6 +145,7 @@ export default {
       this.city = null
 
       this.counter = true
+      }
     },
   }
 };
